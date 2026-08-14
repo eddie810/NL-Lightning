@@ -3,6 +3,8 @@
 # local work cache & built artifacts
 work/
 *.kmz
+# tracked exception: the on-demand snapshot committed by the GitHub Action
+!latest/nl_lightning_latest.kmz
 # python
 __pycache__/
 *.pyc
