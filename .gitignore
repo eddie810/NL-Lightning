@@ -1,0 +1,10 @@
+# secrets
+.env
+# local work cache & built artifacts
+work/
+*.kmz
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/

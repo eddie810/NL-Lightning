@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Sheerr Weather — Live Lightning (NL)</name>
+    <NetworkLink>
+      <name>GLM Lightning — last 30 min</name>
+      <flyToView>0</flyToView>
+      <Link>
+        <!-- Point this at your Bunny pull-zone URL (BUNNY_PULL_URL). -->
+        <href>https://REPLACE-ME.b-cdn.net/lightning/glm_lightning_live.kmz</href>
+        <!-- Re-fetch on a timer. Match this to INTERVAL_SECONDS on the generator. -->
+        <refreshMode>onInterval</refreshMode>
+        <refreshInterval>45</refreshInterval>
+        <!-- Cache-buster is optional if the pull zone uses a short TTL. -->
+        <httpQuery>t=[clock]</httpQuery>
+      </Link>
+    </NetworkLink>
+  </Document>
+</kml>

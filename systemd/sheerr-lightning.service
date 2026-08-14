@@ -1,0 +1,18 @@
+[Unit]
+Description=Sheerr Weather real-time GLM lightning KMZ generator
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Adjust User and WorkingDirectory to your VM.
+User=sheerr
+WorkingDirectory=/opt/sheerr-lightning-realtime
+EnvironmentFile=/opt/sheerr-lightning-realtime/.env
+ExecStart=/opt/sheerr-lightning-realtime/.venv/bin/python -m sheerr_lightning.generate
+Restart=always
+RestartSec=10
+TimeoutStartSec=60
+
+[Install]
+WantedBy=multi-user.target
