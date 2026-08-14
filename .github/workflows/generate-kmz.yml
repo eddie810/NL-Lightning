@@ -42,8 +42,22 @@ jobs:
           git add latest/nl_lightning_latest.kmz
           if git diff --cached --quiet; then
             echo "No change (identical flash data) — skipping commit."
-          else
-            git commit -m "Update latest NL lightning KMZ [skip ci]"
-            git pull --rebase origin "${GITHUB_REF_NAME}"
-            git push
+            exit 0
           fi
+          git commit -m "Update latest NL lightning KMZ [skip ci]"
+          # The KMZ is binary, so a rebase can't auto-merge two concurrent
+          # updates. On a race, just re-base our snapshot onto whatever
+          # landed first — the newest generated data always wins, there's
+          # no history worth preserving in this file.
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — retrying against latest origin."
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --soft "origin/${GITHUB_REF_NAME}"
+            git add latest/nl_lightning_latest.kmz
+            git commit -m "Update latest NL lightning KMZ [skip ci]"
+          done
+          echo "::error::Failed to push after multiple retries."
+          exit 1
