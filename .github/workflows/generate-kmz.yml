@@ -2,9 +2,17 @@ name: Generate latest NL lightning KMZ
 
 on:
   workflow_dispatch: {}
+  schedule:
+    # Every 20 minutes. GitHub cron can slip a few minutes under load, so
+    # treat this as "roughly every 20 min," not exact.
+    - cron: "*/20 * * * *"
 
 permissions:
   contents: write
+
+concurrency:
+  group: generate-kmz
+  cancel-in-progress: false
 
 jobs:
   generate:
@@ -36,5 +44,6 @@ jobs:
             echo "No change (identical flash data) — skipping commit."
           else
             git commit -m "Update latest NL lightning KMZ [skip ci]"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
             git push
           fi
