@@ -6,12 +6,16 @@
       <name>GLM Lightning — last 30 min</name>
       <flyToView>0</flyToView>
       <Link>
-        <!-- Point this at your Bunny pull-zone URL (BUNNY_PULL_URL). -->
-        <href>https://REPLACE-ME.b-cdn.net/lightning/glm_lightning_live.kmz</href>
-        <!-- Re-fetch on a timer. Match this to INTERVAL_SECONDS on the generator. -->
+        <!-- Public repo raw file. Updated on demand by the "Generate latest NL
+             lightning KMZ" GitHub Action (Actions tab > Run workflow), not
+             continuously. Swap for a Bunny pull-zone URL later if/when the
+             always-on loop goes live (see README). -->
+        <href>https://raw.githubusercontent.com/eddie810/NL-Lightning/claude/lightning-kmz-download-ilwarw/latest/nl_lightning_latest.kmz</href>
+        <!-- raw.githubusercontent.com caches for a few minutes regardless, so
+             re-fetching faster than this just wastes requests. -->
         <refreshMode>onInterval</refreshMode>
-        <refreshInterval>45</refreshInterval>
-        <!-- Cache-buster is optional if the pull zone uses a short TTL. -->
+        <refreshInterval>300</refreshInterval>
+        <!-- Cache-buster query param to help bypass the CDN cache. -->
         <httpQuery>t=[clock]</httpQuery>
       </Link>
     </NetworkLink>

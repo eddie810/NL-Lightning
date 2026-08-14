@@ -34,7 +34,23 @@ python -m sheerr_lightning.generate --once --no-upload
 # → writes work/glm_lightning_live.kmz — open it in Google Earth Pro
 ```
 
-## Go live
+## Go live (manual, via public GitHub repo — no server needed)
+
+If you don't want to run the always-on loop yet, use the on-demand path:
+
+1. Make this repo **public** (raw file URLs only work for public repos).
+2. Go to the **Actions** tab → "Generate latest NL lightning KMZ" → **Run workflow**.
+   It builds a fresh KMZ and commits it to `latest/nl_lightning_latest.kmz`.
+3. `frame.kml` already points at that file's raw GitHub URL. Open `frame.kml`
+   once in Google Earth Pro; re-run the workflow whenever you want an update
+   (raw.githubusercontent.com caches for a few minutes, so it isn't instant).
+4. Or just download `latest/nl_lightning_latest.kmz` directly from GitHub
+   whenever you want the current snapshot.
+
+This is throttled by GitHub's raw-content CDN and isn't true real-time — for
+that, use the always-on loop below.
+
+## Go live (always-on loop + Bunny CDN)
 
 1. Fill in `.env` (Bunny storage zone, password, remote path, pull URL).
 2. Set a **short cache TTL** on that pull-zone path (a few seconds), or set
